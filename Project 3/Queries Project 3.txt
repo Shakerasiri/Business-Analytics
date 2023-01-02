@@ -1,0 +1,41 @@
+/* Query 1 - Top 10 Sales Per Album */
+SELECT a.title " Album",
+       count(InvoiceId) "Total sales per album"
+FROM Album a
+JOIN Track t ON t.AlbumId = a.AlbumId
+JOIN InvoiceLine il ON il.TrackId = t.TrackId
+GROUP BY a.title
+ORDER BY 2 DESC
+LIMIT 10;
+
+
+/* Query 2 - The Average Spent of City Per Customer */
+SELECT C.City,
+       avg(I.total) AS City_spent
+FROM Customer C
+JOIN Invoice I ON C.City = I.BillingCity
+GROUP BY C.City
+ORDER BY 2 DESC;
+
+
+/* Query 3 - Total Sales performancee per Employee */
+SELECT E.FirstName" Employee",
+       count(InvoiceId) "Total sales per Employee"
+FROM Employee E
+JOIN Customer C ON E.EmployeeId = C.SupportRepId
+JOIN Invoice il ON il.CustomerId = C.CustomerId
+GROUP BY E.FirstName
+ORDER BY 2 DESC
+
+/* Query 4 - Number of Sales Per MediaType According To Cities */
+SELECT mt.name" MediaType",
+       count(BillingCity) "Number of sales per mediatype of cities"
+FROM MediaType mt
+JOIN Track t ON mt.MediaTypeId= t.MediaTypeId
+JOIN InvoiceLine il ON il.TrackId= t.TrackId
+JOIN Invoice i ON i.InvoiceId = il.InvoiceId
+GROUP BY mt.Name
+ORDER BY 2 DESC
+
+
+
